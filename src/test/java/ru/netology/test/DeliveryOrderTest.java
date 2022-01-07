@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
-import ru.netology.data.deliveryOrderData;
+import ru.netology.data.DeliveryOrderData;
 
 import java.time.Duration;
 
@@ -14,7 +14,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class deliveryOrderTest {
+public class DeliveryOrderTest {
     @BeforeEach
     void setup() {
         open("http://localhost:9999");
@@ -24,11 +24,11 @@ public class deliveryOrderTest {
     @DisplayName("Should successful plan and replan meeting")
     void shouldSuccessfulPlanAndReplanMeeting() {
 
-        String name = deliveryOrderData.generateName("ru");
-        String date1 = deliveryOrderData.generateDate(3);
-        String date2 = deliveryOrderData.generateDate(10);
-        String city = deliveryOrderData.generateCity("ru");
-        String phone = deliveryOrderData.generatePhone("ru");
+        String name = DeliveryOrderData.generateName("ru");
+        String date1 = DeliveryOrderData.generateDate(3);
+        String date2 = DeliveryOrderData.generateDate(10);
+        String city = DeliveryOrderData.generateCity("ru");
+        String phone = DeliveryOrderData.generatePhone("ru");
 
 
         $(".input__control").setValue(city);
@@ -50,15 +50,8 @@ public class deliveryOrderTest {
         String textReorder = $(".notification__content").shouldBe(visible, Duration.ofSeconds(15)).getText();
         String text3 = "Встреча успешно запланирована на " + date2;
         assertEquals(text3,textReorder);
-        //
-
-
-        // TODO: добавить логику теста в рамках которого будет выполнено планирование и перепланирование встречи.
-        // Для заполнения полей формы можно использовать пользователя validUser и строки с датами в переменных
-        // firstMeetingDate и secondMeetingDate. Можно также вызывать методы generateCity(locale),
-        // generateName(locale), generatePhone(locale) для генерации и получения в тесте соответственно города,
-        // имени и номера телефона без создания пользователя в методе generateUser(String locale) в датагенераторе
-
+        //$(".notification__content").shouldBe(visible, Duration.ofSeconds(15))
+        //                .shouldHave(exactText("Встреча успешно запланирована на " + date1));
 
         
     }
