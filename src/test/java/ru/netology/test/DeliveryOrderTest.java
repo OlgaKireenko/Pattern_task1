@@ -8,6 +8,7 @@ import ru.netology.data.DeliveryOrderData;
 
 import java.time.Duration;
 
+import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
@@ -39,20 +40,13 @@ public class DeliveryOrderTest {
         $(".checkbox__box").click();
         $(byText("Запланировать")).click();
 
-        String text = $(".notification__content").shouldBe(visible, Duration.ofSeconds(15)).getText();
-        String text2 = "Встреча успешно запланирована на " + date1;
-        assertEquals(text2,text);
+        $(".notification__content").shouldBe(visible, Duration.ofSeconds(15)).shouldHave(exactText("Встреча успешно запланирована на "+date1));
 
         $("[type='tel']").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[type='tel']").setValue(date2);
         $(byText("Запланировать")).click();
         $(byText("Перепланировать")).click();
-        String textReorder = $(".notification__content").shouldBe(visible, Duration.ofSeconds(15)).getText();
-        String text3 = "Встреча успешно запланирована на " + date2;
-        assertEquals(text3,textReorder);
-        //$(".notification__content").shouldBe(visible, Duration.ofSeconds(15))
-        //                .shouldHave(exactText("Встреча успешно запланирована на " + date1));
-
+        $(".notification__content").shouldBe(visible, Duration.ofSeconds(15)).shouldHave(exactText("Встреча успешно запланирована на "+date2));
         
     }
 }
